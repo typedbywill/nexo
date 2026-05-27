@@ -2,10 +2,16 @@
   "config": {
     "name": "pizza-landing",
     "port": 3000,
-    "assets": ["tailwind"]
+    "assets": [
+      "tailwind"
+    ]
   },
   "pages": {
-    "/": ["Hero", "Features", "Footer"]
+    "/": [
+      "Hero",
+      "Features",
+      "Footer"
+    ]
   },
   "components": {
     "Hero": {
