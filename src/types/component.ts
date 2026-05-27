@@ -1,4 +1,5 @@
-import type { PropDefinition, PropValue } from "./schema.js";
+import type { PropDefinition } from "./schema.js";
+import type { ResolvedProps } from "./props.js";
 
 export interface ComponentMeta {
   name: string;
@@ -12,7 +13,7 @@ export interface ComponentScript {
 
 export interface ComponentContext {
   element: ShadowRoot;
-  props: Record<string, PropValue>;
+  props: ResolvedProps;
   emit: (event: string, data?: unknown) => void;
 }
 

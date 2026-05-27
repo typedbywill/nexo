@@ -1,0 +1,10 @@
+{
+  "name": "Features",
+  "props": {
+    "columns": {
+      "type": "number",
+      "default": 3,
+      "required": false
+    }
+  }
+}

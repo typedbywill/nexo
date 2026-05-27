@@ -1,0 +1,15 @@
+{
+  "name": "Footer",
+  "props": {
+    "year": {
+      "type": "string",
+      "default": "2026",
+      "required": false
+    },
+    "brand": {
+      "type": "string",
+      "default": "Pizza Landing",
+      "required": false
+    }
+  }
+}

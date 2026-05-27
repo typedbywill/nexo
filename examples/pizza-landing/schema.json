@@ -1,0 +1,57 @@
+{
+  "config": {
+    "name": "pizza-landing",
+    "port": 3000,
+    "assets": ["tailwind"]
+  },
+  "pages": {
+    "/": ["Hero", "Features", "Footer"]
+  },
+  "components": {
+    "Hero": {
+      "source": "./components/Hero",
+      "props": {
+        "title": {
+          "type": "string",
+          "default": "Pizza Artesanal",
+          "required": true
+        },
+        "subtitle": {
+          "type": "string",
+          "default": "Forno a lenha, ingredientes frescos",
+          "required": false
+        },
+        "dark": {
+          "type": "boolean",
+          "default": true,
+          "required": false
+        }
+      }
+    },
+    "Features": {
+      "source": "./components/Features",
+      "props": {
+        "columns": {
+          "type": "number",
+          "default": 3,
+          "required": false
+        }
+      }
+    },
+    "Footer": {
+      "source": "./components/Footer",
+      "props": {
+        "year": {
+          "type": "string",
+          "default": "2026",
+          "required": false
+        },
+        "brand": {
+          "type": "string",
+          "default": "Pizza Landing",
+          "required": false
+        }
+      }
+    }
+  }
+}

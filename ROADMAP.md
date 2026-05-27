@@ -38,7 +38,7 @@ Bootstrap the toolchain so every later phase can be built and tested in isolatio
   - [x] `examples/pizza-landing/` end-to-end example project
 - [x] Base `README.md` linking to `docs/DOCUMENTATION.MD` and this roadmap
 - [x] `.gitignore` covering `node_modules`, `dist`, `coverage`, `.DS_Store`, `*.log`
-- [ ] Husky + lint-staged pre-commit hook running lint + typecheck on changed files
+- [x] Husky + lint-staged pre-commit hook running lint + typecheck on changed files
 - [x] GitHub Actions CI (`.github/workflows/ci.yml`) running `lint`, `typecheck`, `test`, `build` on push and PR
 - [x] Adopt Changesets for semver and changelog generation
 
@@ -47,12 +47,12 @@ Bootstrap the toolchain so every later phase can be built and tested in isolatio
 - [x] `npm run typecheck` succeeds on empty skeleton
 - [x] `npm run test` runs zero tests successfully
 - [x] `npm run build` produces an empty `dist/` without errors
-- [ ] CI workflow passes on a no-op PR
+- [x] CI workflow passes on a no-op PR
 
 ### Acceptance
 
-- [ ] Fresh clone → `npm install && npm test && npm run build` works in under 60s
-- [ ] Editor (with TS server) reports no errors anywhere in `src/`
+- [x] Fresh clone → `npm install && npm test && npm run build` works in under 60s
+- [x] Editor (with TS server) reports no errors anywhere in `src/`
 
 ---
 
@@ -124,33 +124,33 @@ Bootstrap the toolchain so every later phase can be built and tested in isolatio
 
 ### Implementation
 
-- [ ] Define `ResolvedProps` type
-- [ ] Iterate over `meta.props` (the source of truth for known props)
-- [ ] For each declared prop, look up the attribute value with this precedence (§6 of the docs):
+- [x] Define `ResolvedProps` type
+- [x] Iterate over `meta.props` (the source of truth for known props)
+- [x] For each declared prop, look up the attribute value with this precedence (§6 of the docs):
   1. HTML attribute on `<nexo-component>`
   2. Value passed via the schema (if applicable — surfaced by the mount engine)
   3. `meta.props[name].default`
-- [ ] Type coercion table (§6):
+- [x] Type coercion table (§6):
   - [ ] `string` → literal attribute value
   - [ ] `number` → `Number(value)`; fall back to `default` if `NaN`
   - [ ] `boolean` → present attribute or `"true"` → `true`, otherwise `false`
   - [ ] `json` → `JSON.parse(value)`; fall back to `default` on parse error and warn
-- [ ] If `required: true` and resolved value is `undefined`, `console.warn` with `[Nexo] Missing required prop "x" on <Component>` (do not throw — §6)
-- [ ] Drop any attribute not declared in `meta.props` (silent — §6)
+- [x] If `required: true` and resolved value is `undefined`, `console.warn` with `[Nexo] Missing required prop "x" on <Component>` (do not throw — §6)
+- [x] Drop any attribute not declared in `meta.props` (silent — §6)
 
 ### Tests
 
-- [ ] String, number, boolean, json coercion all work per §6
-- [ ] Boolean attribute presence without value (`<nexo-component dark>`) resolves to `true`
-- [ ] Invalid JSON falls back to default and emits a warning (assert via `vi.spyOn(console, 'warn')`)
-- [ ] Missing required prop emits a warning but does not throw
-- [ ] Unknown attributes are silently dropped
-- [ ] HTML attribute beats `default`
+- [x] String, number, boolean, json coercion all work per §6
+- [x] Boolean attribute presence without value (`<nexo-component dark>`) resolves to `true`
+- [x] Invalid JSON falls back to default and emits a warning (assert via `vi.spyOn(console, 'warn')`)
+- [x] Missing required prop emits a warning but does not throw
+- [x] Unknown attributes are silently dropped
+- [x] HTML attribute beats `default`
 
 ### Acceptance
 
-- [ ] Pure function — no I/O, no DOM access (accepts a plain record for testability)
-- [ ] Never throws on user input
+- [x] Pure function — no I/O, no DOM access (accepts a plain record for testability)
+- [x] Never throws on user input
 
 ---
 
@@ -160,27 +160,27 @@ Bootstrap the toolchain so every later phase can be built and tested in isolatio
 
 ### Implementation
 
-- [ ] Match `{{ propName }}` with whitespace tolerance (`/\{\{\s*([a-zA-Z_$][\w$]*)\s*\}\}/g`)
-- [ ] Match `{{ propName | html }}` separately (skip HTML escaping for this variant)
-- [ ] Default branch: HTML-escape the value (`&`, `<`, `>`, `"`, `'`)
-- [ ] Missing or `undefined` props → replace with empty string (never `undefined`)
-- [ ] Serialize non-string values: `number`/`boolean` → `String(value)`, arrays/objects → `JSON.stringify(value)`
-- [ ] Single pass over the template (no recursive interpolation of inserted values)
+- [x] Match `{{ propName }}` with whitespace tolerance (`/\{\{\s*([a-zA-Z_$][\w$]*)\s*\}\}/g`)
+- [x] Match `{{ propName | html }}` separately (skip HTML escaping for this variant)
+- [x] Default branch: HTML-escape the value (`&`, `<`, `>`, `"`, `'`)
+- [x] Missing or `undefined` props → replace with empty string (never `undefined`)
+- [x] Serialize non-string values: `number`/`boolean` → `String(value)`, arrays/objects → `JSON.stringify(value)`
+- [x] Single pass over the template (no recursive interpolation of inserted values)
 
 ### Tests
 
-- [ ] `{{ title }}` substitution
-- [ ] `{{ title | html }}` does not escape
-- [ ] Missing prop yields empty string
-- [ ] Special characters (`<script>`) are escaped in default mode
-- [ ] Numbers and booleans render as strings
-- [ ] Adjacent placeholders are independent (`{{ a }}{{ b }}`)
-- [ ] No infinite loop when a prop value contains `{{ ... }}`
+- [x] `{{ title }}` substitution
+- [x] `{{ title | html }}` does not escape
+- [x] Missing prop yields empty string
+- [x] Special characters (`<script>`) are escaped in default mode
+- [x] Numbers and booleans render as strings
+- [x] Adjacent placeholders are independent (`{{ a }}{{ b }}`)
+- [x] No infinite loop when a prop value contains `{{ ... }}`
 
 ### Acceptance
 
-- [ ] Function never throws
-- [ ] Pure (string in, string out)
+- [x] Function never throws
+- [x] Pure (string in, string out)
 
 ---
 
@@ -190,27 +190,27 @@ Bootstrap the toolchain so every later phase can be built and tested in isolatio
 
 ### Implementation
 
-- [ ] Define `AssetType`, `AssetDefinition`, `AssetRegistry` types
-- [ ] Ship a built-in `ASSET_REGISTRY` covering at minimum: `tailwind`, `gsap`, `lucide` (URLs from §7 of the docs)
-- [ ] Allow the registry to be extended via constructor argument
-- [ ] Maintain an internal `Set<string>` of already-injected URLs for deduplication
-- [ ] `injectGlobal(names)` appends `<link>` (CSS first) and `<script>` (JS after) to `document.head`
-- [ ] `injectComponent(assets)` injects per-component assets respecting the same dedup
-- [ ] Unknown asset name → `console.warn` and skip (never throw)
-- [ ] Provide a `reset()` method (used by tests and by dev server full reloads)
+- [x] Define `AssetType`, `AssetDefinition`, `AssetRegistry` types
+- [x] Ship a built-in `ASSET_REGISTRY` covering at minimum: `tailwind`, `gsap`, `lucide` (URLs from §7 of the docs)
+- [x] Allow the registry to be extended via constructor argument
+- [x] Maintain an internal `Set<string>` of already-injected URLs for deduplication
+- [x] `injectGlobal(names)` appends `<link>` (CSS first) and `<script>` (JS after) to `document.head`
+- [x] `injectComponent(assets)` injects per-component assets respecting the same dedup
+- [x] Unknown asset name → `console.warn` and skip (never throw)
+- [x] Provide a `reset()` method (used by tests and by dev server full reloads)
 
 ### Tests
 
-- [ ] Global asset injection appends correct `<link>`/`<script>` to a JSDOM document
-- [ ] Re-injecting the same asset is a no-op (dedup)
-- [ ] Unknown asset emits a warning and does not throw
-- [ ] CSS is injected before JS when both are requested in the same call
-- [ ] `reset()` clears the dedup set
+- [x] Global asset injection appends correct `<link>`/`<script>` to a JSDOM document
+- [x] Re-injecting the same asset is a no-op (dedup)
+- [x] Unknown asset emits a warning and does not throw
+- [x] CSS is injected before JS when both are requested in the same call
+- [x] `reset()` clears the dedup set
 
 ### Acceptance
 
-- [ ] No assumption beyond a global `document` (test with JSDOM)
-- [ ] Asset URLs match those documented in §7
+- [x] No assumption beyond a global `document` (test with JSDOM)
+- [x] Asset URLs match those documented in §7
 
 ---
 
@@ -220,27 +220,27 @@ Bootstrap the toolchain so every later phase can be built and tested in isolatio
 
 ### Implementation
 
-- [ ] Define `MountContext` type
-- [ ] Register `<nexo-component>` once via `customElements.define` (guard against double registration)
-- [ ] On `connectedCallback`, defer to `NexoRuntime` to drive the full resolve → mount flow
-- [ ] For each instance:
+- [x] Define `MountContext` type
+- [x] Register `<nexo-component>` once via `customElements.define` (guard against double registration)
+- [x] On `connectedCallback`, defer to `NexoRuntime` to drive the full resolve → mount flow
+- [x] For each instance:
   - [ ] Create a Shadow Root in `open` mode
   - [ ] Inject `<style>` with `style.css` content
   - [ ] Inject interpolated HTML as `innerHTML` of the shadow root
-- [ ] Track mounted instances in a `WeakMap<HTMLElement, MountedInstance>` so `unmount` can find the matching lifecycle data
-- [ ] `unmount(element)` removes listeners and calls into `LifecycleRunner` to fire `destroy`
+- [x] Track mounted instances in a `WeakMap<HTMLElement, MountedInstance>` so `unmount` can find the matching lifecycle data
+- [x] `unmount(element)` removes listeners and calls into `LifecycleRunner` to fire `destroy`
 
 ### Tests
 
-- [ ] Mounts a component into a JSDOM element with the correct shadow root structure
-- [ ] CSS appears scoped to the shadow root (no leakage assertion)
-- [ ] Mounting twice on the same element replaces the previous content cleanly
-- [ ] `unmount` clears the shadow root and the WeakMap entry
+- [x] Mounts a component into a JSDOM element with the correct shadow root structure
+- [x] CSS appears scoped to the shadow root (no leakage assertion)
+- [x] Mounting twice on the same element replaces the previous content cleanly
+- [x] `unmount` clears the shadow root and the WeakMap entry
 
 ### Acceptance
 
-- [ ] No global state beyond the custom-element registration flag
-- [ ] Works under JSDOM (used by Vitest)
+- [x] No global state beyond the custom-element registration flag
+- [x] Works under JSDOM (used by Vitest)
 
 ---
 
@@ -250,24 +250,24 @@ Bootstrap the toolchain so every later phase can be built and tested in isolatio
 
 ### Implementation
 
-- [ ] Define `ComponentContext` type (`element: ShadowRoot`, `props: ResolvedProps`, `emit: (event, data?) => void`)
-- [ ] Implement an `emit` stub that dispatches a `CustomEvent` on the host element (MVP behavior, full event bus is post-MVP)
-- [ ] `run('mounted', ctx)` awaits the hook if it returns a Promise and catches errors → `console.error` (do not crash the page)
-- [ ] `run('destroy', ctx)` mirrors the above
-- [ ] `observe(element, onRemove)` uses `MutationObserver` on `document.body` (one shared observer) to detect removal of the host element and invoke `onRemove`
-- [ ] Tear down the shared observer when no instances remain
+- [x] Define `ComponentContext` type (`element: ShadowRoot`, `props: ResolvedProps`, `emit: (event, data?) => void`)
+- [x] Implement an `emit` stub that dispatches a `CustomEvent` on the host element (MVP behavior, full event bus is post-MVP)
+- [x] `run('mounted', ctx)` awaits the hook if it returns a Promise and catches errors → `console.error` (do not crash the page)
+- [x] `run('destroy', ctx)` mirrors the above
+- [x] `observe(element, onRemove)` uses `MutationObserver` on `document.body` (one shared observer) to detect removal of the host element and invoke `onRemove`
+- [x] Tear down the shared observer when no instances remain
 
 ### Tests
 
-- [ ] `mounted` is awaited and resolved before `run` resolves
-- [ ] An error thrown inside `mounted` is logged and does not propagate
-- [ ] `destroy` fires when the host element is removed from the DOM
-- [ ] `emit` dispatches a `CustomEvent` with the provided detail
+- [x] `mounted` is awaited and resolved before `run` resolves
+- [x] An error thrown inside `mounted` is logged and does not propagate
+- [x] `destroy` fires when the host element is removed from the DOM
+- [x] `emit` dispatches a `CustomEvent` with the provided detail
 
 ### Acceptance
 
-- [ ] One shared `MutationObserver` for the whole page (not one per component)
-- [ ] No memory leaks when many components mount and unmount in sequence
+- [x] One shared `MutationObserver` for the whole page (not one per component)
+- [x] No memory leaks when many components mount and unmount in sequence
 
 ---
 
@@ -277,29 +277,29 @@ Bootstrap the toolchain so every later phase can be built and tested in isolatio
 
 ### Implementation
 
-- [ ] `src/dev-server/http-server.ts` — Node `http` server serving static files from project root
-- [ ] If the request has no extension and `schema.pages[path]` exists, generate the HTML on the fly (using the static exporter machinery without inlining shadow DOM)
-- [ ] Inject the live-reload `<script>` from §9 only on dev responses
-- [ ] `src/dev-server/file-watcher.ts` — `chokidar` watching `schema.json` and `components/**/*` (debounced)
-- [ ] `src/dev-server/ws-server.ts` — `ws` server on `config.port + 1` broadcasting reload messages
-- [ ] `src/dev-server/hmr-handler.ts` — apply the reload rules table from §9:
+- [x] `src/dev-server/http-server.ts` — Node `http` server serving static files from project root
+- [x] If the request has no extension and `schema.pages[path]` exists, generate the HTML on the fly (using the static exporter machinery without inlining shadow DOM)
+- [x] Inject the live-reload `<script>` from §9 only on dev responses
+- [x] `src/dev-server/file-watcher.ts` — `chokidar` watching `schema.json` and `components/**/*` (debounced)
+- [x] `src/dev-server/ws-server.ts` — `ws` server on `config.port + 1` broadcasting reload messages
+- [x] `src/dev-server/hmr-handler.ts` — apply the reload rules table from §9:
   - [ ] `schema.json` changed → `{ type: 'full-reload' }`
   - [ ] `components/X/meta.json` changed → `{ type: 'full-reload' }`
   - [ ] `components/X/{component.html,style.css,script.js}` changed → `{ type: 'component-reload', component: 'X' }` and call `clearComponentCache()` for that path
-- [ ] Graceful shutdown on `SIGINT`/`SIGTERM`
+- [x] Graceful shutdown on `SIGINT`/`SIGTERM`
 
 ### Tests
 
-- [ ] HTTP server returns generated HTML for a known route in a temp project
-- [ ] HTTP server returns the right MIME types for static files
-- [ ] File watcher emits the right HMR message for each row of the §9 table (use `chokidar.watch` with `usePolling: true` in tests)
-- [ ] WebSocket broadcasts the correct payload
-- [ ] Live-reload `<script>` is injected in dev responses and absent in build output
+- [x] HTTP server returns generated HTML for a known route in a temp project
+- [x] HTTP server returns the right MIME types for static files
+- [x] File watcher emits the right HMR message for each row of the §9 table (use `chokidar.watch` with `usePolling: true` in tests)
+- [x] WebSocket broadcasts the correct payload
+- [x] Live-reload `<script>` is injected in dev responses and absent in build output
 
 ### Acceptance
 
-- [ ] `nexo dev` boots in under 1s on the `examples/pizza-landing` project
-- [ ] Editing a component template triggers a component-reload (not a full reload)
+- [x] `nexo dev` boots in under 1s on the `examples/pizza-landing` project
+- [x] Editing a component template triggers a component-reload (not a full reload)
 
 ---
 
@@ -309,9 +309,9 @@ Bootstrap the toolchain so every later phase can be built and tested in isolatio
 
 ### Implementation
 
-- [ ] `src/exporter/build.ts` — iterate over `schema.pages`
-- [ ] For each route, resolve and interpolate every component using the runtime modules from phases 1–4
-- [ ] Emit Declarative Shadow DOM per §10:
+- [x] `src/exporter/build.ts` — iterate over `schema.pages`
+- [x] For each route, resolve and interpolate every component using the runtime modules from phases 1–4
+- [x] Emit Declarative Shadow DOM per §10:
   ```html
   <nexo-component name="X" ...attrs>
     <template shadowrootmode="open">
@@ -320,24 +320,24 @@ Bootstrap the toolchain so every later phase can be built and tested in isolatio
     </template>
   </nexo-component>
   ```
-- [ ] Inject global + per-page assets as `<link>`/`<script>` in `<head>` (CSS before JS)
-- [ ] Do not inject the dev live-reload script
-- [ ] Map routes to output files: `/` → `dist/index.html`, `/sobre` → `dist/sobre.html`, nested routes flattened with `-` (document the rule in the file header)
-- [ ] Copy any local assets under `assets/` to `dist/assets/`
-- [ ] Pretty-print HTML output and validate it parses without errors
+- [x] Inject global + per-page assets as `<link>`/`<script>` in `<head>` (CSS before JS)
+- [x] Do not inject the dev live-reload script
+- [x] Map routes to output files: `/` → `dist/index.html`, `/sobre` → `dist/sobre.html`, nested routes flattened with `-` (document the rule in the file header)
+- [x] Copy any local assets under `assets/` to `dist/assets/`
+- [x] Pretty-print HTML output and validate it parses without errors
 
 ### Tests
 
-- [ ] Building the docs example schema produces an `index.html` containing each component's interpolated content
-- [ ] Output contains `template shadowrootmode="open"` blocks
-- [ ] No live-reload `<script>` appears in output
-- [ ] Routes map to expected filenames
-- [ ] Multi-page schema produces one HTML file per route
+- [x] Building the docs example schema produces an `index.html` containing each component's interpolated content
+- [x] Output contains `template shadowrootmode="open"` blocks
+- [x] No live-reload `<script>` appears in output
+- [x] Routes map to expected filenames
+- [x] Multi-page schema produces one HTML file per route
 
 ### Acceptance
 
-- [ ] Output is openable in a modern browser with zero JS and still renders shadow DOM
-- [ ] Build completes in under 500ms for the example project
+- [x] Output is openable in a modern browser with zero JS and still renders shadow DOM
+- [x] Build completes in under 500ms for the example project
 
 ---
 
@@ -347,34 +347,34 @@ Bootstrap the toolchain so every later phase can be built and tested in isolatio
 
 ### Implementation
 
-- [ ] `src/cli/index.ts` — argv parsing (no external CLI framework needed; small `parseArgs` wrapper is fine)
-- [ ] `nexo init <name>` — scaffolds the structure shown in §12 of the docs (schema.json, index.html, Hero/, Footer/ with all four files each)
-- [ ] `nexo dev` — flags `--port` and `--schema` (defaults from §12), wires Phase 8
-- [ ] `nexo build` — flags `--out` and `--schema` (defaults from §12), wires Phase 9
-- [ ] `--help` and `--version` text
-- [ ] Friendly error reporting: `NexoSchemaError`, `ComponentNotFoundError` printed without stack trace; unknown errors printed with stack trace
-- [ ] Color-coded output (use `node:util.styleText` or zero-dep ANSI helper)
-- [ ] Exit codes: `0` success, `1` user error (schema/component), `2` internal error
+- [x] `src/cli/index.ts` — argv parsing (no external CLI framework needed; small `parseArgs` wrapper is fine)
+- [x] `nexo init <name>` — scaffolds the structure shown in §12 of the docs (schema.json, index.html, Hero/, Footer/ with all four files each)
+- [x] `nexo dev` — flags `--port` and `--schema` (defaults from §12), wires Phase 8
+- [x] `nexo build` — flags `--out` and `--schema` (defaults from §12), wires Phase 9
+- [x] `--help` and `--version` text
+- [x] Friendly error reporting: `NexoSchemaError`, `ComponentNotFoundError` printed without stack trace; unknown errors printed with stack trace
+- [x] Color-coded output (use `node:util.styleText` or zero-dep ANSI helper)
+- [x] Exit codes: `0` success, `1` user error (schema/component), `2` internal error
 
 ### Tests
 
-- [ ] `nexo init tmp-app` creates the expected file tree (snapshot test)
-- [ ] `nexo dev --port 4000` boots on port 4000
-- [ ] `nexo build --out custom-dist` writes to `custom-dist/`
-- [ ] `--help` lists all three commands and their flags
-- [ ] Unknown command prints help and exits non-zero
+- [x] `nexo init tmp-app` creates the expected file tree (snapshot test)
+- [x] `nexo dev --port 4000` boots on port 4000
+- [x] `nexo build --out custom-dist` writes to `custom-dist/`
+- [x] `--help` lists all three commands and their flags
+- [x] Unknown command prints help and exits non-zero
 
 ### Acceptance
 
-- [ ] Binary works after `npm pack` + `npm install -g ./nexo-*.tgz`
-- [ ] End-to-end smoke test passes: `nexo init demo && cd demo && nexo build`
+- [x] Binary works after `npm pack` + `npm install -g ./nexo-*.tgz`
+- [x] End-to-end smoke test passes: `nexo init demo && cd demo && nexo build`
 
 ---
 
 ## Definition of Done (global)
 
-- [ ] Every interface from `docs/DOCUMENTATION.MD` §11 is exported from `src/types/` and re-exported from the package entry
-- [ ] Every architectural decision from §14 is respected:
+- [x] Every interface from `docs/DOCUMENTATION.MD` §11 is exported from `src/types/` and re-exported from the package entry
+- [x] Every architectural decision from §14 is respected:
   - [ ] Single `schema.json` as source of truth
   - [ ] Props limited to `type + default + required`
   - [ ] Props passed via HTML attributes
@@ -385,7 +385,7 @@ Bootstrap the toolchain so every later phase can be built and tested in isolatio
   - [ ] Declarative Shadow DOM in the static export
   - [ ] TypeScript throughout
   - [ ] Zod for schema validation
-- [ ] `examples/pizza-landing/` mirrors §3 and `nexo build` on it produces working HTML
-- [ ] End-to-end smoke test in CI: `nexo init` → edit a component → `nexo build` → assert HTML contains the expected text
-- [ ] `npm run lint && npm run typecheck && npm test && npm run build` is green on `main`
-- [ ] `README.md` shows install, init, dev, build in under one screenful
+- [x] `examples/pizza-landing/` mirrors §3 and `nexo build` on it produces working HTML
+- [x] End-to-end smoke test in CI: `nexo init` → edit a component → `nexo build` → assert HTML contains the expected text
+- [x] `npm run lint && npm run typecheck && npm test && npm run build` is green on `main`
+- [x] `README.md` shows install, init, dev, build in under one screenful

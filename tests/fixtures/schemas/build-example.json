@@ -1,0 +1,23 @@
+{
+  "config": {
+    "name": "build-test",
+    "port": 3000,
+    "assets": []
+  },
+  "pages": {
+    "/": ["Hero"],
+    "/sobre": ["Hero"]
+  },
+  "components": {
+    "Hero": {
+      "source": "../components/Hero",
+      "props": {
+        "title": {
+          "type": "string",
+          "default": "Pizza Artesanal",
+          "required": false
+        }
+      }
+    }
+  }
+}
