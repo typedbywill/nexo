@@ -1,0 +1,13 @@
+{
+  "config": {
+    "name": "non-string-source"
+  },
+  "pages": {
+    "/": ["Hero"]
+  },
+  "components": {
+    "Hero": {
+      "source": 123
+    }
+  }
+}

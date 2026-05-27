@@ -1,0 +1,13 @@
+{
+  "config": {
+    "name": "absolute-source"
+  },
+  "pages": {
+    "/": ["Hero"]
+  },
+  "components": {
+    "Hero": {
+      "source": "/components/Hero"
+    }
+  }
+}

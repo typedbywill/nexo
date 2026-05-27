@@ -1,0 +1,19 @@
+{
+  "config": {
+    "name": "invalid-prop-type"
+  },
+  "pages": {
+    "/": ["Hero"]
+  },
+  "components": {
+    "Hero": {
+      "source": "./components/Hero",
+      "props": {
+        "title": {
+          "type": "invalid",
+          "required": false
+        }
+      }
+    }
+  }
+}

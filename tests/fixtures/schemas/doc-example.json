@@ -1,0 +1,62 @@
+{
+  "config": {
+    "name": "meu-projeto",
+    "port": 3000,
+    "assets": ["tailwind", "gsap", "lucide"]
+  },
+  "pages": {
+    "/": ["Hero", "Features", "Pricing", "CTA", "Footer"],
+    "/sobre": ["AboutHero", "Team", "Footer"]
+  },
+  "components": {
+    "Hero": {
+      "source": "./components/Hero",
+      "assets": {
+        "js": ["gsap"]
+      },
+      "props": {
+        "title": {
+          "type": "string",
+          "default": "Bem-vindo",
+          "required": true
+        },
+        "subtitle": {
+          "type": "string",
+          "default": "",
+          "required": false
+        },
+        "dark": {
+          "type": "boolean",
+          "default": false,
+          "required": false
+        }
+      }
+    },
+    "Features": {
+      "source": "./components/Features",
+      "props": {
+        "columns": {
+          "type": "number",
+          "default": 3,
+          "required": false
+        }
+      }
+    },
+    "Pricing": {
+      "source": "./components/Pricing"
+    },
+    "CTA": {
+      "source": "./components/CTA"
+    },
+    "AboutHero": {
+      "source": "./components/AboutHero"
+    },
+    "Team": {
+      "source": "./components/Team"
+    },
+    "Footer": {
+      "source": "./components/Footer",
+      "props": {}
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Hero",
+  "props": {
+    "title": {
+      "type": "string",
+      "default": "Bem-vindo",
+      "required": true
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "",
+      "required": false
+    }
+  }
+}

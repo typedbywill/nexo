@@ -1,0 +1,10 @@
+{
+  "pages": {
+    "/": ["Hero"]
+  },
+  "components": {
+    "Hero": {
+      "source": "./components/Hero"
+    }
+  }
+}

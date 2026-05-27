@@ -1,0 +1,14 @@
+{
+  "config": {
+    "name": "default-port",
+    "assets": ["tailwind"]
+  },
+  "pages": {
+    "/": ["Hero"]
+  },
+  "components": {
+    "Hero": {
+      "source": "./components/Hero"
+    }
+  }
+}

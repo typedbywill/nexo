@@ -1,0 +1,10 @@
+{
+  "config": {
+    "name": "missing-pages"
+  },
+  "components": {
+    "Hero": {
+      "source": "./components/Hero"
+    }
+  }
+}

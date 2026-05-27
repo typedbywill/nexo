@@ -1,0 +1,9 @@
+{
+  "name": "BadMeta",
+  "props": {
+    "title": {
+      "type": "invalid",
+      "required": false
+    }
+  }
+}

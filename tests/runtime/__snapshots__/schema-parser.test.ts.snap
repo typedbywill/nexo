@@ -1,0 +1,82 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`parseSchema > returns a value with the exact NexoSchema shape 1`] = `
+{
+  "components": {
+    "AboutHero": {
+      "source": "./components/AboutHero",
+    },
+    "CTA": {
+      "source": "./components/CTA",
+    },
+    "Features": {
+      "props": {
+        "columns": {
+          "default": 3,
+          "required": false,
+          "type": "number",
+        },
+      },
+      "source": "./components/Features",
+    },
+    "Footer": {
+      "props": {},
+      "source": "./components/Footer",
+    },
+    "Hero": {
+      "assets": {
+        "js": [
+          "gsap",
+        ],
+      },
+      "props": {
+        "dark": {
+          "default": false,
+          "required": false,
+          "type": "boolean",
+        },
+        "subtitle": {
+          "default": "",
+          "required": false,
+          "type": "string",
+        },
+        "title": {
+          "default": "Bem-vindo",
+          "required": true,
+          "type": "string",
+        },
+      },
+      "source": "./components/Hero",
+    },
+    "Pricing": {
+      "source": "./components/Pricing",
+    },
+    "Team": {
+      "source": "./components/Team",
+    },
+  },
+  "config": {
+    "assets": [
+      "tailwind",
+      "gsap",
+      "lucide",
+    ],
+    "name": "meu-projeto",
+    "port": 3000,
+  },
+  "pages": {
+    "/": [
+      "Hero",
+      "Features",
+      "Pricing",
+      "CTA",
+      "Footer",
+    ],
+    "/sobre": [
+      "AboutHero",
+      "Team",
+      "Footer",
+    ],
+  },
+}
+`;

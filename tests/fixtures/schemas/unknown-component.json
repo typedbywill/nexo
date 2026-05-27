@@ -1,0 +1,13 @@
+{
+  "config": {
+    "name": "unknown-component"
+  },
+  "pages": {
+    "/": ["MissingComponent"]
+  },
+  "components": {
+    "Hero": {
+      "source": "./components/Hero"
+    }
+  }
+}
