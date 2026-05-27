@@ -1,0 +1,43 @@
+---
+description: Efetuar commit ao finalizar alterações no repositório
+alwaysApply: true
+---
+
+# Commit ao finalizar alterações
+
+Ao concluir uma tarefa que modificou arquivos no repositório, **sempre criar um commit** antes de encerrar a resposta.
+
+## Quando commitar
+
+- Houve alterações relevantes (código, docs, config, regras, roadmap, etc.)
+- A tarefa solicitada pelo usuário foi concluída ou entregue em um marco coerente
+
+## Quando não commitar
+
+- Nenhum arquivo foi alterado
+- Apenas leitura, explicação ou revisão sem edições
+- O usuário pediu explicitamente para **não** commitar nesta sessão
+
+## Como commitar
+
+1. Em paralelo: `git status`, `git diff` (staged + unstaged), `git log -5 --oneline`
+2. Mensagem em 1–2 frases focando o **porquê**, no estilo dos commits recentes do repo
+3. Não incluir segredos (`.env`, credenciais, chaves)
+4. Staging apenas dos arquivos da tarefa; commit com HEREDOC:
+
+```bash
+git commit -m "$(cat <<'EOF'
+Mensagem aqui.
+
+EOF
+)"
+```
+
+5. `git status` após o commit para confirmar sucesso
+
+## Segurança Git
+
+- Nunca alterar `git config`
+- Nunca `--no-verify` nem force push em `main`/`master` sem pedido explícito
+- Se o hook falhar: corrigir e criar **novo** commit (não amend, salvo exceções do protocolo de amend)
+- Não fazer push a menos que o usuário peça
