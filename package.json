@@ -1,23 +1,48 @@
 {
-  "name": "nexo",
+  "name": "@typedbywill/nexo",
   "version": "1.0.0",
-  "description": "Declarative AI-native frontend runtime.",
+  "description": "Declarative AI-native frontend runtime for landing pages and microsystems.",
   "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "directories": {
     "doc": "docs"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/typedbywill/nexo.git"
+  },
+  "homepage": "https://github.com/typedbywill/nexo#readme",
+  "bugs": {
+    "url": "https://github.com/typedbywill/nexo/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "vitest run",
-    "build": "tsup",
+    "build": "tsup && chmod +x dist/cli/index.js",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write .",
     "test:watch": "vitest --watch",
     "coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "prepublishOnly": "npm run build && npm test"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "nexo",
+    "frontend",
+    "runtime",
+    "web-components",
+    "shadow-dom",
+    "declarative",
+    "static-site",
+    "cli"
+  ],
+  "author": "typedbywill",
   "license": "ISC",
   "type": "module",
   "dependencies": {
@@ -45,9 +70,8 @@
     "vitest": "^4.1.7"
   },
   "bin": {
-    "nexo": "./dist/cli/index.js"
+    "nexo": "dist/cli/index.js"
   },
-  "private": true,
   "lint-staged": {
     "*.{ts,js}": [
       "eslint --fix"

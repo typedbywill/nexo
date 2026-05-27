@@ -10,9 +10,15 @@ Runtime frontend declarativo e AI-native para landing pages e microsystems.
 ## Instalacao
 
 ```bash
+npm install -g @typedbywill/nexo
+```
+
+Desenvolvimento local do runtime:
+
+```bash
 npm install
 npm run build
-npm link   # ou: npm install -g .
+npm link
 ```
 
 ## Uso rapido
