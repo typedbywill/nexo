@@ -1,6 +1,6 @@
 {
   "name": "@typedbywill/nexo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Declarative AI-native frontend framework for landing pages and microsystems.",
   "main": "./dist/index.js",
   "files": [
