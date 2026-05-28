@@ -1,7 +1,9 @@
-# Nexo — Runtime Documentation
+# Nexo — Especificação do framework
 
-> Runtime frontend declarativo e AI-native para landing pages e microsystems.
-> Toda a aplicação é descrita por um único `schema.json`. O runtime cuida do resto.
+> Framework frontend declarativo e AI-native para landing pages e microsystems.
+> Toda a aplicação é descrita por um único `schema.json`. O framework cuida do resto.
+
+> **Guia prático:** [guia-de-uso.md](./guia-de-uso.md) · **Índice:** [README.md](./README.md)
 
 ---
 
@@ -14,7 +16,7 @@
 5. [Componentes](#5-componentes)
 6. [Sistema de Props](#6-sistema-de-props)
 7. [Asset System](#7-asset-system)
-8. [Runtime — Arquitetura Interna](#8-runtime--arquitetura-interna)
+8. [Motor do framework — Arquitetura interna](#8-motor-do-framework--arquitetura-interna)
 9. [Dev Server](#9-dev-server)
 10. [Static Export](#10-static-export)
 11. [TypeScript — Tipos e Interfaces](#11-typescript--tipos-e-interfaces)
@@ -26,7 +28,7 @@
 
 ## 1. Visão Geral
 
-Nexo é um runtime frontend focado em um problema específico: **interfaces geradas ou mantidas por IA degradam rapidamente em ecossistemas modernos** por excesso de abstração, dependências implícitas e tooling complexo.
+Nexo é um framework frontend focado em um problema específico: **interfaces geradas ou mantidas por IA degradam rapidamente em ecossistemas modernos** por excesso de abstração, dependências implícitas e tooling complexo.
 
 Nexo resolve isso sendo:
 
@@ -38,7 +40,7 @@ Nexo resolve isso sendo:
 
 ### O que Nexo **não é**
 
-Nexo não é um framework generalista. Não compete com React, Vue ou Next.js.
+Nexo é um framework **especializado**, não generalista como React, Vue ou Next.js.
 O escopo é deliberadamente limitado: **landing pages, microsystems e interfaces geradas por IA.**
 
 ---
@@ -58,7 +60,7 @@ IA lê schema.json
   → entende componentes registrados
   → modifica pages[]
   → adiciona props
-  → runtime remonta a interface
+  → o framework remonta a interface
 ```
 
 ### Restrição como feature
@@ -67,7 +69,7 @@ Ambientes restritos produzem outputs mais previsíveis de LLMs. As limitações 
 
 ### Sem virtual DOM, sem reconciliação
 
-O runtime monta componentes diretamente no DOM via Web Components e Shadow DOM. Sem camada de abstração intermediária.
+O motor do framework monta componentes diretamente no DOM via Web Components e Shadow DOM. Sem camada de abstração intermediária.
 
 ---
 
@@ -100,7 +102,7 @@ O runtime monta componentes diretamente no DOM via Web Components e Shadow DOM. 
 
 ### `index.html`
 
-Ponto de entrada da rota `/`. Contém apenas os placeholders que o runtime resolve.
+Ponto de entrada da rota `/`. Contém apenas os placeholders que o framework resolve.
 
 ```html
 <!DOCTYPE html>
@@ -204,7 +206,7 @@ Objeto onde cada chave é uma rota e o valor é um **array ordenado de nomes de 
 }
 ```
 
-A ordem do array define a ordem de renderização na página. O runtime monta os componentes nessa sequência.
+A ordem do array define a ordem de renderização na página. O framework monta os componentes nessa sequência.
 
 ### `components`
 
@@ -290,7 +292,7 @@ export default {
 
 ### `meta.json`
 
-Define o contrato de props do componente. É a fonte de verdade para validação em runtime.
+Define o contrato de props do componente. É a fonte de verdade para validação em tempo de execução.
 
 ```json
 {
@@ -352,9 +354,9 @@ Define o contrato de props do componente. É a fonte de verdade para validação
 <nexo-component name="Nav" items='["Home","Sobre","Contato"]'></nexo-component>
 ```
 
-### Validação em runtime
+### Validação em tempo de execução
 
-O runtime valida as props na montagem do componente:
+O framework valida as props na montagem do componente:
 
 - Props `required: true` sem valor → **warning no console** em dev, sem quebrar a app
 - Tipo incompatível → tenta conversão, fallback para o `default`
@@ -364,7 +366,7 @@ O runtime valida as props na montagem do componente:
 
 ## 7. Asset System
 
-Assets são bibliotecas externas (CSS ou JS) injetadas automaticamente pelo runtime.
+Assets são bibliotecas externas (CSS ou JS) injetadas automaticamente pelo framework.
 
 ### Assets globais
 
@@ -391,7 +393,7 @@ Declarados em `components.<Nome>.assets`. São injetados **apenas quando o compo
 
 ### Registry de assets
 
-O runtime mantém um registry interno que mapeia nomes de assets para suas URLs de CDN.
+O framework mantém um registry interno que mapeia nomes de assets para suas URLs de CDN.
 
 ```typescript
 // Exemplo do registry interno
@@ -411,13 +413,13 @@ const ASSET_REGISTRY: Record<string, AssetDefinition> = {
 }
 ```
 
-Assets são injetados uma única vez por página, mesmo que múltiplos componentes declarem o mesmo asset. O runtime deduplica automaticamente.
+Assets são injetados uma única vez por página, mesmo que múltiplos componentes declarem o mesmo asset. O framework deduplica automaticamente.
 
 ---
 
-## 8. Runtime — Arquitetura Interna
+## 8. Motor do framework — Arquitetura interna
 
-O runtime é composto por módulos independentes e testáveis. Cada módulo tem responsabilidade única.
+O pacote `@typedbywill/nexo` implementa o motor em `src/runtime/` (módulos independentes e testáveis). Cada módulo tem responsabilidade única.
 
 ```
 NexoRuntime
@@ -598,7 +600,7 @@ nexo build
 - Inline do HTML + CSS de cada componente no documento final
 - Injeta assets externos como `<link>` e `<script>` no `<head>`
 - **Não** injeta o script de live reload
-- Shadow DOM é mantido para isolamento em runtime no browser
+- Shadow DOM é mantido para isolamento no browser em modo interativo
 
 ### Estratégia de inlining
 
@@ -622,7 +624,7 @@ Isso usa **Declarative Shadow DOM** — suportado nativamente nos browsers moder
 
 ## 11. TypeScript — Tipos e Interfaces
 
-Toda a base de código do runtime deve ser escrita em TypeScript. Abaixo estão os tipos centrais.
+Toda a base de código do framework deve ser escrita em TypeScript. Abaixo estão os tipos centrais.
 
 ### `NexoSchema`
 
@@ -728,7 +730,7 @@ export interface MountContext {
 
 ```typescript
 export interface NexoRuntime {
-  // inicializa o runtime com o schema
+  // inicializa o framework com o schema
   init(schemaPath: string): Promise<void>
 
   // monta um componente em um elemento
@@ -948,11 +950,11 @@ Registro de decisões arquiteturais tomadas e seus motivos. Útil para não revi
 | 4 | Dev server + static export (sem SSR) | Landing pages não precisam de SSR; static é mais simples e mais rápido |
 | 5 | Páginas como array ordenado no schema | Landing pages são sequências lineares; array é legível e editável por IA |
 | 6 | Shadow DOM para isolamento | Sem CSS leakage, sem conflitos globais, padrão web nativo |
-| 7 | Sem virtual DOM, sem reconciliação | Menor complexidade, runtime menor, comportamento previsível |
+| 7 | Sem virtual DOM, sem reconciliação | Menor complexidade, bundle menor, comportamento previsível |
 | 8 | Declarative Shadow DOM no static export | Sem necessidade de JS para hidratação inicial, SEO-friendly |
 | 9 | TypeScript em toda a base de código | Tipos como documentação viva, autocomplete para contribuidores e para IA |
 | 10 | Zod para validação do schema | Parse seguro com erros descritivos, inferência de tipos gratuita |
 
 ---
 
-*Nexo — runtime declarativo, AI-native, focado em previsibilidade.*
+*Nexo — framework declarativo, AI-native, focado em previsibilidade.*

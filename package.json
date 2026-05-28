@@ -1,11 +1,12 @@
 {
   "name": "@typedbywill/nexo",
   "version": "1.0.0",
-  "description": "Declarative AI-native frontend runtime for landing pages and microsystems.",
+  "description": "Declarative AI-native frontend framework for landing pages and microsystems.",
   "main": "./dist/index.js",
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "docs"
   ],
   "directories": {
     "doc": "docs"
@@ -35,7 +36,7 @@
   "keywords": [
     "nexo",
     "frontend",
-    "runtime",
+    "framework",
     "web-components",
     "shadow-dom",
     "declarative",

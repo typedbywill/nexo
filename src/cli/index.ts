@@ -7,10 +7,7 @@ import { styleText } from "node:util";
 
 import { buildStatic } from "../exporter/build.js";
 import { startDevServer } from "../dev-server/index.js";
-import {
-  ComponentNotFoundError,
-  NexoSchemaError,
-} from "../runtime/errors.js";
+import { ComponentNotFoundError, NexoSchemaError } from "../runtime/errors.js";
 import { initProject } from "./init.js";
 
 const VERSION = readPackageVersion();
@@ -23,10 +20,7 @@ interface ParsedArgs {
 
 function readPackageVersion(): string {
   try {
-    const pkgPath = join(
-      dirname(fileURLToPath(import.meta.url)),
-      "../../package.json",
-    );
+    const pkgPath = join(dirname(fileURLToPath(import.meta.url)), "../../package.json");
     const pkg = JSON.parse(readFileSync(pkgPath, "utf-8")) as {
       version?: string;
     };
@@ -80,7 +74,7 @@ function parseArgs(argv: string[]): ParsedArgs {
 
 function printHelp(): void {
   console.log(`
-${styleText("cyan", "nexo")} — declarative AI-native frontend runtime
+${styleText("cyan", "nexo")} — declarative AI-native frontend framework
 
 ${styleText("bold", "Commands:")}
   init <name>    Create a new Nexo project
@@ -117,23 +111,13 @@ function printUnknownError(error: unknown): void {
 }
 
 async function runDev(flags: Record<string, string | boolean>): Promise<number> {
-  const schemaPath = resolve(
-    typeof flags.schema === "string" ? flags.schema : "./schema.json",
-  );
-  const port =
-    typeof flags.port === "string" ? Number(flags.port) : undefined;
+  const schemaPath = resolve(typeof flags.schema === "string" ? flags.schema : "./schema.json");
+  const port = typeof flags.port === "string" ? Number(flags.port) : undefined;
 
   const server = await startDevServer({ schemaPath, port });
 
-  console.log(
-    styleText(
-      "green",
-      `Nexo dev server running at http://localhost:${server.port}`,
-    ),
-  );
-  console.log(
-    styleText("dim", `Watching schema.json and components/**/* (ws:${server.wsPort})`),
-  );
+  console.log(styleText("green", `Nexo dev server running at http://localhost:${server.port}`));
+  console.log(styleText("dim", `Watching schema.json and components/**/* (ws:${server.wsPort})`));
 
   await new Promise(() => {
     // keep process alive until signal
@@ -143,12 +127,8 @@ async function runDev(flags: Record<string, string | boolean>): Promise<number> 
 }
 
 async function runBuild(flags: Record<string, string | boolean>): Promise<number> {
-  const schemaPath = resolve(
-    typeof flags.schema === "string" ? flags.schema : "./schema.json",
-  );
-  const outDir = resolve(
-    typeof flags.out === "string" ? flags.out : "./dist",
-  );
+  const schemaPath = resolve(typeof flags.schema === "string" ? flags.schema : "./schema.json");
+  const outDir = resolve(typeof flags.out === "string" ? flags.out : "./dist");
 
   console.log(styleText("cyan", "Building..."));
 
@@ -159,9 +139,7 @@ async function runBuild(flags: Record<string, string | boolean>): Promise<number
     console.log(styleText("green", `✓ ${relative}`));
   }
 
-  console.log(
-    styleText("green", `Build complete in ${result.durationMs}ms`),
-  );
+  console.log(styleText("green", `Build complete in ${result.durationMs}ms`));
 
   return 0;
 }
@@ -215,10 +193,7 @@ async function main(): Promise<number> {
         return 1;
     }
   } catch (error) {
-    if (
-      error instanceof NexoSchemaError ||
-      error instanceof ComponentNotFoundError
-    ) {
+    if (error instanceof NexoSchemaError || error instanceof ComponentNotFoundError) {
       printUserError(error);
       return 1;
     }
